@@ -1,0 +1,41 @@
+services:
+  server_dev:
+    build:
+      context: ./server
+      target: dev
+    volumes:
+      - ./server:/app/
+      - node_modules:/app/node_modules
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysql
+
+  server_prod:
+    build:
+      context: ./server
+    volumes:
+      - node_modules:/app/node_modules
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql
+    volumes:
+      - mysql_config:/etc/mysql/conf.d
+      - mysql_store:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+
+  nginx:
+    image: nginx
+    ports:
+      - 80:80
+volumes:
+  node_modules:
+  mysql_config:
+  mysql_store:
