@@ -4,14 +4,14 @@ RUN corepack enable
 COPY ["package.json", "pnpm-lock.yaml", "/app/"]
 VOLUME [ "/app/node_modules" ]
 RUN pnpm install
-EXPOSE 3000
+EXPOSE 8080
 
 FROM dependence AS dev
 VOLUME [ "/app" ]
-CMD [ "pnpm", "start:dev" ]
+CMD [ "pnpm", "dev" ]
 
 
 FROM dependence
-COPY . /app/
+COPY . .
 CMD [ "pnpm", "prod" ]
 
