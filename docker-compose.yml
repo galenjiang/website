@@ -28,6 +28,9 @@ services:
       - ./nginx.default.development.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - 80:80
+    depends_on:
+      - dev_server
+      - dev_client
 
   prod_client:
     build:
@@ -49,6 +52,9 @@ services:
       - ./nginx.default.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - 80:80
+    depends_on:
+      - prod_server
+      - prod_client
 
   mysql:
     image: mysql
